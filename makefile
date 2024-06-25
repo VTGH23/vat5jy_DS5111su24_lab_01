@@ -1,6 +1,9 @@
 default:
 	@cat makefile
 
+tokenizer_setup:
+	python3 -m venv env && . ./env/bin/activate && ./env/bin/pip install --upgrade pip && ./env/bin/pip install -r requirements.txt
+
 get_texts:
 	wget https://www.gutenberg.org/cache/epub/17192/pg17192.txt
 	wget https://www.gutenberg.org/cache/epub/1063/pg1063.txt
