@@ -15,6 +15,8 @@ get_texts:
 	wget https://www.gutenberg.org/cache/epub/30092/pg30092.txt
 	wget https://www.gutenberg.org/cache/epub/50852/pg50852.txt
 	wget https://www.gutenberg.org/cache/epub/32037/pg32037.txt
+	wget https://www.gutenberg.org/cache/epub/10031/pg10031.txt
+	wget https://www.gutenberg.org/cache/epub/14082/pg14082.txt
 
 raven_line_count:
 	cat pg17192.txt | wc -l
@@ -30,3 +32,6 @@ total_lines:
 
 total_words:
 	wc -w *.txt
+
+test:
+	. env/bin/activate; pytest
