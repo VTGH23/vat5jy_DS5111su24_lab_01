@@ -41,7 +41,9 @@ def test_clean_text_The_Raven():
 
 	# Read in The Raven as a string
 	# file_path = '/home/ubuntu/vat5jy_DS5111su24_lab_01/pg17192.txt' --- old logic
-	file_path = os.path.join(os.path.dirname(__file__),'..','pg17192.txt')
+	# file_path = os.path.join(os.path.dirname(__file__),'..', 'pg17192.txt') -- old logic
+	root_dir = os.path.dirname(os.path.dirname(__file__)) # Get parent directory
+	file_path = os.path.join(root_dir, 'pg17192.txt')
 	with open(file_path, 'r') as file:
 		file_content = file.read()
 
@@ -62,7 +64,9 @@ def test_clean_text_list_of_texts(book_name):
 	# When I pass _text_ to the 'clean_text()' function
 	# Then I should get a string as a return with all lowercase words and no punctuation, for each of my specified texts
 	# file_path = f'/home/ubuntu/vat5jy_DS5111su24_lab_01/{book_name}'
-	file_path = os.path.join(os.path.dirname(__file__),'..',f'{book_name}')
+	# file_path = os.path.join(os.path.dirname(__file__),'..',f'{book_name}') -- old logic
+	root_dir = os.path.dirname(os.path.dirname(__file__))
+	file_path = os.path.join(root_dir, f'{book_name}')
 	with open(file_path, 'r') as file:
 		file_content = file.read()
 
@@ -86,7 +90,9 @@ def test_clean_text_list_of_texts_combined():
 	for c in book_list:
 
 		# file_path = f'/home/ubuntu/vat5jy_DS5111su24_lab_01/{c}' --- old logic
-		file_path = os.path.join(os.path.dirname(__file__),'..',f'{c}')
+		# file_path = os.path.join(os.path.dirname(__file__),'..',f'{c}') --- old logic
+		root_dir = os.path.dirname(os.path.dirname(__file__))
+		file_path = os.path.join(root_dir, 'pg17192.txt')
 		with open(file_path, 'r') as file:
 			text_concat += file.read() + ' ' # Add a space here between text from different files
 
