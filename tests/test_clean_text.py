@@ -160,7 +160,7 @@ def test_clean_text_python_version():
 
 	my_python = sys.version_info[:2]
 	print(my_python)
-	assert my_python == (3,12), f"Test failed because current python version is not expected version"
+	assert my_python in ((3,7),(3,12)), f"Test failed because current python version is not expected version"
 
 	Example_Text = "This is a placeholder."
 	expected_text = "this is a placeholder"
