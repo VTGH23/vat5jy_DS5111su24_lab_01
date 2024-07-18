@@ -3,6 +3,7 @@ import pylint
 import string
 import platform
 import sys
+import os
 from my_functions import clean_text, tokenize, count_words
 
 def test_clean_text():
@@ -39,7 +40,8 @@ def test_clean_text_The_Raven():
 	# Then I should get a string as a return with all lowercase words and no punctuation
 
 	# Read in The Raven as a string
-	file_path = '/home/ubuntu/vat5jy_DS5111su24_lab_01/pg17192.txt'
+	# file_path = '/home/ubuntu/vat5jy_DS5111su24_lab_01/pg17192.txt' --- old logic
+	file_path = os.path.join(os.path.dirname(__file__),'..','pg17192.txt')
 	with open(file_path, 'r') as file:
 		file_content = file.read()
 
@@ -59,8 +61,8 @@ def test_clean_text_list_of_texts(book_name):
 	# Given strings _text_ from a specified list of full texts written by Poe
 	# When I pass _text_ to the 'clean_text()' function
 	# Then I should get a string as a return with all lowercase words and no punctuation, for each of my specified texts
-
-	file_path = f'/home/ubuntu/vat5jy_DS5111su24_lab_01/{book_name}'
+	# file_path = f'/home/ubuntu/vat5jy_DS5111su24_lab_01/{book_name}'
+	file_path = os.path.join(os.path.dirname(__file__),'..',f'{book_name}')
 	with open(file_path, 'r') as file:
 		file_content = file.read()
 
@@ -83,7 +85,8 @@ def test_clean_text_list_of_texts_combined():
 	text_concat = ""
 	for c in book_list:
 
-		file_path = f'/home/ubuntu/vat5jy_DS5111su24_lab_01/{c}'
+		# file_path = f'/home/ubuntu/vat5jy_DS5111su24_lab_01/{c}' --- old logic
+		file_path = os.path.join(os.path.dirname(__file__),'..',f'{c}')
 		with open(file_path, 'r') as file:
 			text_concat += file.read() + ' ' # Add a space here between text from different files
 

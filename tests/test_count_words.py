@@ -1,6 +1,7 @@
 import pytest
 import pylint
 from collections import Counter
+import os
 from my_functions import clean_text, tokenize, count_words
 
 def test_count_words_example():
@@ -48,7 +49,8 @@ def test_count_words_The_Raven():
 	# Then I should get a dictionary as a return representing the words in the string as keys and their counts as values
 
 	# Read in The Raven as a string
-	file_path = '/home/ubuntu/vat5jy_DS5111su24_lab_01/pg17192.txt'
+	# file_path = '/home/ubuntu/vat5jy_DS5111su24_lab_01/pg17192.txt' --- old logic
+	file_path = os.path.join(os.path.dirname(__file__), '..', 'pg17192.txt')
 	with open(file_path, 'r') as file:
 		file_content = file.read()
 	counts = count_words(file_content)
@@ -62,7 +64,8 @@ def test_count_words_The_Raven_keys():
 	# Then the keys of my return dictionary from count_words() should be the same as the unique strings returned from tokenize().
 
 	# Read in The Raven as a string
-	file_path = '/home/ubuntu/vat5jy_DS5111su24_lab_01/pg17192.txt'
+	# file_path = '/home/ubuntu/vat5jy_DS5111su24_lab_01/pg17192.txt' -- old logic
+	file_path = os.path.join(os.path.dirname(__file__), '..', 'pg17192.txt')
 	with open(file_path, 'r') as file:
 		file_content = file.read()
 	counts = count_words(file_content)
@@ -77,7 +80,8 @@ def test_count_words_The_Raven_dict():
 	# Then the counts for the keys in the return dict from count_words() should equal the counts of strings returned from tokenize().
 
 	# Read in The Raven as a string
-	file_path = '/home/ubuntu/vat5jy_DS5111su24_lab_01/pg17192.txt'
+	# file_path = '/home/ubuntu/vat5jy_DS5111su24_lab_01/pg17192.txt'
+	file_path = os.path.join(os.path.dirname(__file__), '..', 'pg17192.txt')
 	with open(file_path, 'r') as file:
 		file_content = file.read()
 
@@ -102,7 +106,8 @@ def test_count_words_list_of_texts(book_name):
 	# When I pass _text_ to the 'count_words()' function and the 'tokenize()' function
 	# Then the counts for the keys in the return dict from count_words() should equal the counts of strings returned from tokenize(), for each text
 
-	file_path = f'/home/ubuntu/vat5jy_DS5111su24_lab_01/{book_name}'
+	# file_path = f'/home/ubuntu/vat5jy_DS5111su24_lab_01/{book_name}' -- old logic
+	file_path = os.path.join(os.path.dirname(__file__),'..',f'{book_name}')
 	with open(file_path, 'r') as file:
 		file_content = file.read()
 
@@ -129,7 +134,8 @@ def test_count_words_list_of_texts_combined():
 	text_concat = ""
 	for c in book_list:
 
-		file_path = f'/home/ubuntu/vat5jy_DS5111su24_lab_01/{c}'
+		# file_path = f'/home/ubuntu/vat5jy_DS5111su24_lab_01/{c}' --- old logic
+		file_path = os.path.join(os.path.dirname(__file__),'..',f'{c}')
 		with open(file_path, 'r') as file:
 			text_concat += file.read() + ' ' # Add a space here between text from different files
 
