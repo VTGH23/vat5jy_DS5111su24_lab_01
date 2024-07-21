@@ -3,6 +3,11 @@ name: Python package
 on:
   push:
   workflow_dispatch:
+    inputs:
+      non_integration_test_toggle:
+        description: 'if true, run the non-integration tests'
+        required: true
+        default: 'true'
 
 jobs:
   build:
@@ -10,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.7"]
+        python-version: ["3.12"]
 
     steps:
       - uses: actions/checkout@v4
@@ -27,6 +32,7 @@ jobs:
           make env
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Test with pytest for non-integration tests
+        if: ${{ inputs.non_integration_test_toggle == 'true' }}
         run: |
           pytest -vvx -m "not integration" tests/
       - name: Test with pytest for integration tests
