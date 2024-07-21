@@ -26,6 +26,9 @@ jobs:
         run: |
           make env
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      - name: Test with pytest
+      - name: Test with pytest for non-integration tests
         run: |
-          pytest -vvx tests/
+          pytest -vvx -m "not integration" tests/
+      - name: Test with pytest for integration tests
+        run: |
+          pytest -vvx -m integration tests/

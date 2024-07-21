@@ -167,3 +167,38 @@ def test_clean_text_python_version():
 	cleaned_text = clean_text(Example_Text)
 
 	assert cleaned_text == expected_text, f"clean_text() failed on example"
+
+@pytest.mark.integration
+def test_clean_text_integration_01():
+
+	# Given a string _text_
+	# When I pass _text_ to 'clean_text()' and then to 'tokenize()'
+	# Then I should get a python list, where each item is a word from _text_. Every word should be lowercase and there should be no punctuation.
+
+	my_string = "Hello! We are testing some of our functions today!"
+	expected_list = ["hello", "we", "are", "testing", "some", "of", "our", "functions", "today"]
+
+	cleaned_text = clean_text(my_string)
+	assert isinstance(cleaned_text, str), f"clean_text() failed on my_string"
+	my_list = tokenize(cleaned_text)
+	assert isinstance(my_list, list), f"tokenize() failed on cleaned text"
+
+	assert my_list == expected_list, f"integration test failed on example text"
+
+@pytest.mark.integration
+def test_clean_text_integration_02():
+
+	# Given a string _text_
+	# When I pass _text_ to 'clean_text()' and then to 'count_words()'
+	# Then I should get a python dictionary with the words of _text_ as keys, and their counts as value AND
+	# Every word should be lowercase and there should be no punctuation.
+
+	my_string = "Hello! We are testing some of our functions today again. hello and goodbye!" 
+	expected_dict = {"hello":2,"we":1,"are":1,"testing":1,"some":1,"of":1,"our":1,"functions":1,"today":1,"again":1,"and":1,"goodbye":1}
+
+	cleaned_text = clean_text(my_string)
+	assert isinstance(cleaned_text, str), f"clean_text() failed on my_string"
+	my_dict = count_words(cleaned_text)
+	assert isinstance(my_dict, dict), f"count_words() failed on cleaned text"
+
+	assert my_dict == expected_dict, f"integration test failed on example text"
