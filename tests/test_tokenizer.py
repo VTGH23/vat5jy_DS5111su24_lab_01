@@ -1,5 +1,6 @@
 import pytest
 import pylint
+import os
 from my_functions import clean_text, tokenize, count_words
 
 def test_tokenize():
@@ -38,7 +39,8 @@ def test_tokenize_The_Raven():
 	# Then I should get a python list, where each item is a word from _text_
 
 	# Read in The Raven as a string
-	file_path = '/home/ubuntu/vat5jy_DS5111su24_lab_01/pg17192.txt'
+	# file_path = '/home/ubuntu/vat5jy_DS5111su24_lab_01/pg17192.txt' -- old logic
+	file_path = os.path.join(os.path.dirname(__file__), '..','pg17192.txt')
 	with open(file_path, 'r') as file:
 		file_content = file.read()
 
@@ -60,7 +62,8 @@ def test_tokenize_list_of_texts(book_name):
 	# When I pass _text_ to the 'tokenize()' function
 	# Then I should get a python list, where each item is a word from _text_, for each of my specified texts
 
-	file_path = f'/home/ubuntu/vat5jy_DS5111su24_lab_01/{book_name}'
+	# file_path = f'/home/ubuntu/vat5jy_DS5111su24_lab_01/{book_name}' -- old logic
+	file_path = os.path.join(os.path.dirname(__file__),'..',f'{book_name}')
 	with open(file_path, 'r') as file:
 		file_content = file.read()
 
@@ -84,7 +87,8 @@ def test_tokenizer_list_of_texts_combined():
 	text_concat = ""
 	for c in book_list:
 
-		file_path = f'/home/ubuntu/vat5jy_DS5111su24_lab_01/{c}'
+		# file_path = f'/home/ubuntu/vat5jy_DS5111su24_lab_01/{c}' -- old logic
+		file_path = os.path.join(os.path.dirname(__file__), '..', f'{c}')
 		with open(file_path, 'r') as file:
 			text_concat += file.read() + ' ' # Add a space here between text from different files
 
@@ -114,3 +118,17 @@ def test_tokenizer_Le_Corbeau():
 	assert len(tokenized_list) == len(text.split()), f"Tokenizer failed Le Corbeau. List length is not as expected."
 	# Test that all tokens are strings as expected
 	assert all(isinstance(token, str) for token in tokenized_list), f"Tokenized failed on Le Corbeau. Not all tokens are str type."
+
+@pytest.mark.xfail(reason="This is another test intended to fail on purpose because it expects the return value to be a string")
+def test_tokenize_fail_02():
+
+	# Given a string _text of sample text
+	# When I pass _text_ to the 'tokenize()' function
+	# Then I should get a python list, where each item is a word from _text_
+
+	example_text = "This is a test of example text."
+	tokenized_list = tokenize(example_text)
+	expected_return_fail = "This is a test of example text."
+
+	assert isinstance(tokenized_list,list), f"Tokenizer failed on sample text: {text}"
+	assert expected_return_fail == tokenized_list, f"Tokenizer failed on sample text: {text}"

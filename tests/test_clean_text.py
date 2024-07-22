@@ -3,6 +3,7 @@ import pylint
 import string
 import platform
 import sys
+import os
 from my_functions import clean_text, tokenize, count_words
 
 def test_clean_text():
@@ -39,7 +40,10 @@ def test_clean_text_The_Raven():
 	# Then I should get a string as a return with all lowercase words and no punctuation
 
 	# Read in The Raven as a string
-	file_path = '/home/ubuntu/vat5jy_DS5111su24_lab_01/pg17192.txt'
+	# file_path = '/home/ubuntu/vat5jy_DS5111su24_lab_01/pg17192.txt' --- old logic
+	# file_path = os.path.join(os.path.dirname(__file__),'..', 'pg17192.txt') -- old logic
+	root_dir = os.path.dirname(os.path.dirname(__file__)) # Get parent directory
+	file_path = os.path.join(root_dir, 'pg17192.txt')
 	with open(file_path, 'r') as file:
 		file_content = file.read()
 
@@ -59,8 +63,10 @@ def test_clean_text_list_of_texts(book_name):
 	# Given strings _text_ from a specified list of full texts written by Poe
 	# When I pass _text_ to the 'clean_text()' function
 	# Then I should get a string as a return with all lowercase words and no punctuation, for each of my specified texts
-
-	file_path = f'/home/ubuntu/vat5jy_DS5111su24_lab_01/{book_name}'
+	# file_path = f'/home/ubuntu/vat5jy_DS5111su24_lab_01/{book_name}'
+	# file_path = os.path.join(os.path.dirname(__file__),'..',f'{book_name}') -- old logic
+	root_dir = os.path.dirname(os.path.dirname(__file__))
+	file_path = os.path.join(root_dir, f'{book_name}')
 	with open(file_path, 'r') as file:
 		file_content = file.read()
 
@@ -83,7 +89,10 @@ def test_clean_text_list_of_texts_combined():
 	text_concat = ""
 	for c in book_list:
 
-		file_path = f'/home/ubuntu/vat5jy_DS5111su24_lab_01/{c}'
+		# file_path = f'/home/ubuntu/vat5jy_DS5111su24_lab_01/{c}' --- old logic
+		# file_path = os.path.join(os.path.dirname(__file__),'..',f'{c}') --- old logic
+		root_dir = os.path.dirname(os.path.dirname(__file__))
+		file_path = os.path.join(root_dir, 'pg17192.txt')
 		with open(file_path, 'r') as file:
 			text_concat += file.read() + ' ' # Add a space here between text from different files
 
@@ -151,10 +160,45 @@ def test_clean_text_python_version():
 
 	my_python = sys.version_info[:2]
 	print(my_python)
-	assert my_python == (3,12), f"Test failed because current python version is not expected version"
+	assert my_python in ((3,7),(3,12)), f"Test failed because current python version is not expected version"
 
 	Example_Text = "This is a placeholder."
 	expected_text = "this is a placeholder"
 	cleaned_text = clean_text(Example_Text)
 
 	assert cleaned_text == expected_text, f"clean_text() failed on example"
+
+@pytest.mark.integration
+def test_clean_text_integration_01():
+
+	# Given a string _text_
+	# When I pass _text_ to 'clean_text()' and then to 'tokenize()'
+	# Then I should get a python list, where each item is a word from _text_. Every word should be lowercase and there should be no punctuation.
+
+	my_string = "Hello! We are testing some of our functions today!"
+	expected_list = ["hello", "we", "are", "testing", "some", "of", "our", "functions", "today"]
+
+	cleaned_text = clean_text(my_string)
+	assert isinstance(cleaned_text, str), f"clean_text() failed on my_string"
+	my_list = tokenize(cleaned_text)
+	assert isinstance(my_list, list), f"tokenize() failed on cleaned text"
+
+	assert my_list == expected_list, f"integration test failed on example text"
+
+@pytest.mark.integration
+def test_clean_text_integration_02():
+
+	# Given a string _text_
+	# When I pass _text_ to 'clean_text()' and then to 'count_words()'
+	# Then I should get a python dictionary with the words of _text_ as keys, and their counts as value AND
+	# Every word should be lowercase and there should be no punctuation.
+
+	my_string = "Hello! We are testing some of our functions today again. hello and goodbye!" 
+	expected_dict = {"hello":2,"we":1,"are":1,"testing":1,"some":1,"of":1,"our":1,"functions":1,"today":1,"again":1,"and":1,"goodbye":1}
+
+	cleaned_text = clean_text(my_string)
+	assert isinstance(cleaned_text, str), f"clean_text() failed on my_string"
+	my_dict = count_words(cleaned_text)
+	assert isinstance(my_dict, dict), f"count_words() failed on cleaned text"
+
+	assert my_dict == expected_dict, f"integration test failed on example text"

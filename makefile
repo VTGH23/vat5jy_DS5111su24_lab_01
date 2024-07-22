@@ -34,4 +34,4 @@ total_words:
 	wc -w *.txt
 
 test:
-	. env/bin/activate; pytest
+	. env/bin/activate; pytest -m "not integration"
