@@ -4,7 +4,13 @@ import string
 import platform
 import sys
 import os
-from my_functions import clean_text, tokenize, count_words
+sys.path.append('./src')
+
+import pkg_vat5jy as pkg
+#from pkg_vat5jy.my_functions import clean_text
+#from pkg_vat5jy.my_functions import tokenize
+#from pkg_vat5jy.my_functions import count_words
+
 
 def test_clean_text():
 
@@ -13,7 +19,7 @@ def test_clean_text():
 	# Then I should get a string as a return with all lowercase words and no punctuation
 
 	text = "But the Raven, sitting lonely on the placid bust, spoke only That one word, as if his soul in that one word he did outpour."
-	cleaned_text = clean_text(text)
+	cleaned_text = pkg.clean_text(text)
 	expected_clean_text = "but the raven sitting lonely on the placid bust spoke only that one word as if his soul in that one word he did outpour"
 
 	assert isinstance(cleaned_text, str), f"clean_text() failed on sample text: {text}"
@@ -27,7 +33,7 @@ def test_clean_text_fail():
 	# Then I should get a string as a return with all lowercase words and no punctuation
 
 	text = "But the Raven, sitting lonely on the placid bust, spoke only That one word, as if his soul in that one word he did outpour."
-	cleaned_text = clean_text(text)
+	cleaned_text = pkg.clean_text(text)
 	expected_clean_text_fail = "But the Raven sitting lonely on the placid bust spoke only That one word as if his soul in that one word he did outpour."
 
 	assert isinstance(cleaned_text, str), f"clean_text() failed on sample text: {text}"
@@ -47,7 +53,7 @@ def test_clean_text_The_Raven():
 	with open(file_path, 'r') as file:
 		file_content = file.read()
 
-	cleaned_text = clean_text(file_content)
+	cleaned_text = pkg.clean_text(file_content)
 	assert isinstance(cleaned_text, str), f"clean_text() failed on The Raven."
 	# Test for punctuation removal
 	assert any(character in cleaned_text for character in string.punctuation) == False, f"clean_text() failed on removing punctuation on The Raven."
@@ -70,7 +76,7 @@ def test_clean_text_list_of_texts(book_name):
 	with open(file_path, 'r') as file:
 		file_content = file.read()
 
-	cleaned_text = clean_text(file_content)
+	cleaned_text = pkg.clean_text(file_content)
 	assert isinstance(cleaned_text, str), f"clean_text() failed on {book_name}."
 	# Test for punctuation removal
 	assert any(character in cleaned_text for character in string.punctuation) == False, f"clean_text() failed on removing punctuation on {book_name}."
@@ -96,7 +102,7 @@ def test_clean_text_list_of_texts_combined():
 		with open(file_path, 'r') as file:
 			text_concat += file.read() + ' ' # Add a space here between text from different files
 
-	cleaned_text = clean_text(text_concat)
+	cleaned_text = pkg.clean_text(text_concat)
 	assert isinstance(cleaned_text, str), f"clean_text() failed on combined texts."
 	# Test for punctuation removal
 	assert any(character in cleaned_text for character in string.punctuation) == False, f"clean_text() failed on removing punctuation on combined texts."
@@ -114,7 +120,7 @@ def test_clean_text_Le_Corbeau():
 	pris leur vol--demain il me laissera comme mes Espérances déjà ont
 	pris leur vol.» Alors l'oiseau dit: «Jamais plus.»_"""
 
-	cleaned_text = clean_text(text)
+	cleaned_text = pkg.clean_text(text)
 	assert isinstance(cleaned_text, str), f"clean_text() failed on Le Corbeau."
 	# Test for punctuation removal
 	assert any(character in cleaned_text for character in string.punctuation) == False, f"clean_text() failed on removing punctuation on Le Corbeau."
@@ -132,7 +138,7 @@ def test_clean_text_Japanese():
 
 	Japanese_Example_Text = "This is a placeholder."
 	expected_text = "this is a placeholder"
-	cleaned_text = clean_text(Japanese_Example_Text)
+	cleaned_text = pkg.clean_text(Japanese_Example_Text)
 
 	assert cleaned_text == expected_text, f"clean_text() failed on removing punctuation on Japanese example"
 
@@ -148,7 +154,7 @@ def test_clean_text_OS():
 
 	Example_Text = "This is a placeholder."
 	expected_text = "this is a placeholder"
-	cleaned_text = clean_text(Example_Text)
+	cleaned_text = pkg.clean_text(Example_Text)
 
 	assert cleaned_text == expected_text, f"clean_text() failed on example"
 
@@ -164,7 +170,7 @@ def test_clean_text_python_version():
 
 	Example_Text = "This is a placeholder."
 	expected_text = "this is a placeholder"
-	cleaned_text = clean_text(Example_Text)
+	cleaned_text = pkg.clean_text(Example_Text)
 
 	assert cleaned_text == expected_text, f"clean_text() failed on example"
 
@@ -178,9 +184,9 @@ def test_clean_text_integration_01():
 	my_string = "Hello! We are testing some of our functions today!"
 	expected_list = ["hello", "we", "are", "testing", "some", "of", "our", "functions", "today"]
 
-	cleaned_text = clean_text(my_string)
+	cleaned_text = pkg.clean_text(my_string)
 	assert isinstance(cleaned_text, str), f"clean_text() failed on my_string"
-	my_list = tokenize(cleaned_text)
+	my_list = pkg.tokenize(cleaned_text)
 	assert isinstance(my_list, list), f"tokenize() failed on cleaned text"
 
 	assert my_list == expected_list, f"integration test failed on example text"
@@ -196,9 +202,9 @@ def test_clean_text_integration_02():
 	my_string = "Hello! We are testing some of our functions today again. hello and goodbye!" 
 	expected_dict = {"hello":2,"we":1,"are":1,"testing":1,"some":1,"of":1,"our":1,"functions":1,"today":1,"again":1,"and":1,"goodbye":1}
 
-	cleaned_text = clean_text(my_string)
+	cleaned_text = pkg.clean_text(my_string)
 	assert isinstance(cleaned_text, str), f"clean_text() failed on my_string"
-	my_dict = count_words(cleaned_text)
+	my_dict = pkg.count_words(cleaned_text)
 	assert isinstance(my_dict, dict), f"count_words() failed on cleaned text"
 
 	assert my_dict == expected_dict, f"integration test failed on example text"

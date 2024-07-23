@@ -2,7 +2,14 @@ import pytest
 import pylint
 from collections import Counter
 import os
-from my_functions import clean_text, tokenize, count_words
+#from my_functions import clean_text, tokenize, count_words
+import sys
+sys.path.append('/.src/')
+import pkg_vat5jy as pkg
+
+#from pkg_vat5jy.my_functions import clean_text
+#from pkg_vat5jy.my_functions import tokenize
+#from pkg_vat5jy.my_functions import count_words
 
 def test_count_words_example():
 	# Example test
@@ -11,7 +18,7 @@ def test_count_words_example():
 	# When I pass _text_ to the 'count_words()' function
 	# I should get a dictionary as return representing the words in the string as keys and their counts as value
 	text = 'philosophical prose poem of "Eureka," which he deemed the crowning work'
-	assert isinstance(count_words(text), dict), f"count_words() failed on sample text: {text}"
+	assert isinstance(pkg.count_words(text), dict), f"count_words() failed on sample text: {text}"
 
 def test_count_words():
 
@@ -20,7 +27,7 @@ def test_count_words():
 	# I should get a dictionary as return representing the words in the string as keys and their counts as value
 
 	text = 'But the Raven, sitting lonely on the placid bust, spoke only That one word, as if his soul in that one word he did outpour.'
-	counts = count_words(text)
+	counts = pkg.count_words(text)
 	expected_counts = {"But": 1, "the": 2, "Raven,": 1, "sitting": 1, "lonely": 1, "on": 1, "placid": 1, "bust,": 1, "spoke": 1, "only": 1, 
 	"That": 1, "one": 2, "word,": 1, "as": 1, "if": 1, "his": 1, "soul": 1, "in": 1, "that": 1, "word": 1, "he": 1, "did": 1, "outpour.": 1}
 
@@ -35,7 +42,7 @@ def test_count_words_fail():
 	# I should get a dictionary as a return representing the words in the string as keys and their counts as values
 
 	text = 'But the Raven, sitting lonely on the placid bust, spoke only That one word, as if his soul in that one word he did outpour.'
-	counts = count_words(text)
+	counts = pkg.count_words(text)
 	expected_counts_fail = {"But": 1, "the": 1, "Raven,": 1, "sitting": 1, "lonely": 1, "on": 1, "placid": 1, "bust,": 1, "spoke": 1, "only": 1, 
 	"That": 1, "one": 1, "word,": 1, "as": 1, "if": 1, "his": 1, "soul": 1, "in": 1, "that": 1, "word": 1, "he": 1, "did": 1, "outpour.": 1}
 
@@ -53,7 +60,7 @@ def test_count_words_The_Raven():
 	file_path = os.path.join(os.path.dirname(__file__), '..', 'pg17192.txt')
 	with open(file_path, 'r') as file:
 		file_content = file.read()
-	counts = count_words(file_content)
+	counts = pkg.count_words(file_content)
 
 	assert isinstance(counts, dict), f"count_words() failed on The Raven."
 
@@ -68,10 +75,10 @@ def test_count_words_The_Raven_keys():
 	file_path = os.path.join(os.path.dirname(__file__), '..', 'pg17192.txt')
 	with open(file_path, 'r') as file:
 		file_content = file.read()
-	counts = count_words(file_content)
+	counts = pkg.count_words(file_content)
 
 	# Test return dictionary has keys which represent the unique words in the string
-	assert set(list(counts.keys())) == set(tokenize(file_content)), f"count_words() failed on The Raven. Keys do not represent the unique words in the string"
+	assert set(list(counts.keys())) == set(pkg.tokenize(file_content)), f"count_words() failed on The Raven. Keys do not represent the unique words in the string"
 
 def test_count_words_The_Raven_dict():
 
@@ -85,10 +92,10 @@ def test_count_words_The_Raven_dict():
 	with open(file_path, 'r') as file:
 		file_content = file.read()
 
-	counts = count_words(file_content)
+	counts = pkg.count_words(file_content)
 
 	# Tokenize The Raven
-	tokenized_list = tokenize(file_content)
+	tokenized_list = pkg.tokenize(file_content)
 
 	# Build dictionary of counts from tokenized list
 	tokenized_dict = Counter(tokenized_list)
@@ -111,10 +118,10 @@ def test_count_words_list_of_texts(book_name):
 	with open(file_path, 'r') as file:
 		file_content = file.read()
 
-	counts = count_words(file_content)
+	counts = pkg.count_words(file_content)
 
 	# Tokenize the text
-	tokenized_list = tokenize(file_content)
+	tokenized_list = pkg.tokenize(file_content)
 
 	# Build dictionary of counts from tokenized list
 	tokenized_dict = Counter(tokenized_list)
@@ -139,10 +146,10 @@ def test_count_words_list_of_texts_combined():
 		with open(file_path, 'r') as file:
 			text_concat += file.read() + ' ' # Add a space here between text from different files
 
-	counts = count_words(text_concat)
+	counts = pkg.count_words(text_concat)
 
 	# Tokenize the text
-	tokenized_list = tokenize(text_concat)
+	tokenized_list = pkg.tokenize(text_concat)
 
 	# Build dictionary of counts from tokenized list
 	tokenized_dict = Counter(tokenized_list)
@@ -161,10 +168,10 @@ def test_count_words_Le_Corbeau():
 	pris leur vol--demain il me laissera comme mes Espérances déjà ont
 	pris leur vol.» Alors l'oiseau dit: «Jamais plus.»_"""
 
-	counts = count_words(text)
+	counts = pkg.count_words(text)
 
 	# Tokenize Le Corbeau
-	tokenized_list = tokenize(text)
+	tokenized_list = pkg.tokenize(text)
 
 	# Build dictionary of counts from tokenized list
 	tokenized_dict = Counter(tokenized_list)
