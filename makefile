@@ -33,5 +33,9 @@ total_lines:
 total_words:
 	wc -w *.txt
 
-test:
-	. env/bin/activate; pytest -m "not integration"
+lint:
+	. env/bin/activate; pylint src/pkg_vat5jy/my_functions.py
+
+test: lint
+	#. env/bin/activate; pytest -m "not integration"
+	. ./env/bin/activate && pytest -m "not integration"
