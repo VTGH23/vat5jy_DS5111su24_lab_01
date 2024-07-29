@@ -1,7 +1,13 @@
 import pytest
 import pylint
 import os
-from my_functions import clean_text, tokenize, count_words
+#from my_functions import clean_text, tokenize, count_words
+import sys
+sys.path.append('./src')
+import pkg_vat5jy as pkg
+#from pkg_vat5jy.my_functions import clean_text
+#from pkg_vat5jy.my_functions import tokenize
+#from pkg_vat5jy.my_functions import count_words
 
 def test_tokenize():
 
@@ -10,7 +16,7 @@ def test_tokenize():
 	# Then I should get a python list, where each item is a word from _text_
 
 	text = "But the Raven, sitting lonely on the placid bust, spoke only That one word, as if his soul in that one word he did outpour."
-	tokenized_list = tokenize(text)
+	tokenized_list = pkg.tokenize(text)
 	expected_return = ["But", "the", "Raven,", "sitting", "lonely", "on", "the",  "placid", "bust,", "spoke", "only", "That", "one", "word,", "as",
 	"if", "his", "soul", "in", "that", "one", "word", "he",  "did", "outpour."]
 
@@ -25,7 +31,7 @@ def test_tokenize_fail():
         # Then I should get a python list, where each item is a a word from _text_
 
         text = "But the Raven, sitting lonely on the placid bust, spoke only That one word, as if his soul in that one word he did outpour."
-        tokenized_list = tokenize(text)
+        tokenized_list = pkg.tokenize(text)
         expected_return_fail = ("But", "the", "Raven,", "sitting", "lonely", "on", "the",  "placid", "bust,", "spoke", "only", "That", "one", "word,", "as",
         "if", "his", "soul", "in", "that", "one", "word", "he",  "did", "outpour.")
 
@@ -44,7 +50,7 @@ def test_tokenize_The_Raven():
 	with open(file_path, 'r') as file:
 		file_content = file.read()
 
-	tokenized_list = tokenize(file_content)
+	tokenized_list = pkg.tokenize(file_content)
 
 	assert isinstance(tokenized_list, list), f"Tokenizer failed on The Raven"
 	# Test that the length of return list is as expected
@@ -67,7 +73,7 @@ def test_tokenize_list_of_texts(book_name):
 	with open(file_path, 'r') as file:
 		file_content = file.read()
 
-	tokenized_list = tokenize(file_content)
+	tokenized_list = pkg.tokenize(file_content)
 
 	assert isinstance(tokenized_list, list), f"Tokenizer failed on {book_name}"
 	# Test that the length of return list is as expected
@@ -92,7 +98,7 @@ def test_tokenizer_list_of_texts_combined():
 		with open(file_path, 'r') as file:
 			text_concat += file.read() + ' ' # Add a space here between text from different files
 
-	tokenized_list = tokenize(text_concat)
+	tokenized_list = pkg.tokenize(text_concat)
 
 	assert isinstance(tokenized_list, list), f"Tokenizer failed on combined texts."
 	# Test that the length of return list is as expected
@@ -111,7 +117,7 @@ def test_tokenizer_Le_Corbeau():
 	pris leur vol--demain il me laissera comme mes Espérances déjà ont
 	pris leur vol.» Alors l'oiseau dit: «Jamais plus.»_"""
 
-	tokenized_list = tokenize(text)
+	tokenized_list = pkg.tokenize(text)
 
 	assert isinstance(tokenized_list, list), f"Tokenizer failed on Le Corbeau"
 	# Test that the length of return list is as expected
@@ -127,7 +133,7 @@ def test_tokenize_fail_02():
 	# Then I should get a python list, where each item is a word from _text_
 
 	example_text = "This is a test of example text."
-	tokenized_list = tokenize(example_text)
+	tokenized_list = pkg.tokenize(example_text)
 	expected_return_fail = "This is a test of example text."
 
 	assert isinstance(tokenized_list,list), f"Tokenizer failed on sample text: {text}"
