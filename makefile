@@ -34,8 +34,8 @@ total_words:
 	wc -w *.txt
 
 lint:
-	. env/bin/activate; pylint src/pkg_vat5jy/my_functions.py
+	. env/bin/activate; pylint src/pkg_vat5jy/my_functions.py; pylint tests/test_clean_text.py
 
-test: lint
+test:
 	#. env/bin/activate; pytest -m "not integration"
 	. ./env/bin/activate && pytest -m "not integration"
