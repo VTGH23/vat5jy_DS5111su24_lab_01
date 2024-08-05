@@ -1,0 +1,26 @@
+instructor_id,instructor name,employee_active_status_flag
+i1,Abbas Kazemipour,TRUE
+i2,Adam Tashman,TRUE
+i3,Bill Basener,TRUE
+i4,Cait Dreisbach,TRUE
+i5,Eric Field,TRUE
+i6,Eric Tassone,TRUE
+i7,Jason Williamson,TRUE
+i8,Jeffrey Woo,TRUE
+i9,Jeremy Bolton,FALSE
+i10,Jon Kropko,TRUE
+i11,Judy Fox,TRUE
+i12,Lei Xie,TRUE
+i13,Luis Felipe Rosado Murillo,FALSE
+i14,Marc Ruggiano,TRUE
+i15,Mike Porter,TRUE
+i16,Nada Basit,TRUE
+i17,Panagiotis Apostolellis,TRUE
+i18,Pete Alonzi,TRUE
+i19,Peter Gedeck,TRUE
+i20,Raf Alvarado,TRUE
+i21,Renee Cummings,TRUE
+i22,Rich Nguyen,TRUE
+i23,Sree Mallikarjun,TRUE
+i24,Stephen Baek,TRUE
+i25,Teague Henry,TRUE

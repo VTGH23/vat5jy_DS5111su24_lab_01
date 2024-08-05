@@ -1,0 +1,54 @@
+1. What tables will you build?
+	- 'instructors' will hold details for all course instructors
+	- 'courses' will hold details for all courses, including if course is active or inactive
+	- 'learning_outcomes' will hold details for all learning outcomes for each course
+	- 'teaching_assignments' will hold details for teaching assignments
+	- 'teaching_assignments_instructors' will hold details for instructors associated with teaching assignments
+	- 'terms' will hold details for all academic terms
+
+2. For each table, what field(s) will you use for primary key?
+	- instructors: Primary key is a unique ID "instructor_id" which will be a field with a unique id string for each instructor in the database.
+	- courses: Primary key is a unique ID "course_id" which will be a field with a unique id string for each course in the database.
+	- learning_outcomes: Primary key is a unique ID "learning_outcome_id" which will be a field with a unique id string for each learning outcome in the database.
+	-  teaching_assignments: Primary key is "assignment_id" which will be a field with a unique id string for each course offering in the database.
+	- teaching_assignments_instructors: Primary key is composite key built from two foreign keys "assignment_id" and "instructor_id"
+	- terms: Primary key is "term_id" which will be a field with a unique id string for each distinct term in the database.
+
+3. For each table, what foreign keys will you use?
+	- instructors: N/A
+	- courses: N/A
+	- learning_outcomes: "course_id" is foreign key from courses table
+	- teaching_assignments: "course_id" is foreign key from courses table, "term_id" is foreign key from terms table
+	- teaching_assignments_instructors: "assignment_id" is foreign key from the teaching_assignments table, "instructor_id" is foreign key from the instructors table
+	- terms: N/A
+
+4. Learning outcomes, courses, and instructors need a flag to indicate if they are currently active or not. How will your database support this feature? In particular: if a course will be taught again, it will be flagged as active. If the course won't be taught again, it will be flagged as inactive. It is important to track if an instructor is a current employee or not. Learning outcomes for a course can change. You'll want to track if a learning outcome is currently active or not.
+	- In the learning_outcomes table we include an active_learning_outcome_flag field that is TRUE if the learning outcome is active and FALSE if the learning outcome is inactive.
+	- In the courses table we include an active_course_flag field that is TRUE if the course is active and FALSE if the course is inactive.
+	- In the instructors table we include an employee_active_status_flag field that is TRUE if the employee is a current employee and FALSE if not. 
+
+5. Is there anything to normalize in the database, and if so, how will you normalize it? Recall the desire to eliminate redundancy.
+	- The original data that was provided violated the principle of atomicity because it had fields with multiple values in a single cell i.e., instructor names separated by commas for one course offering. We also see redundancies where multiple tables contain data for course names and instructor names. 
+	- We solve the atomicity issue by using the teaching_assignments_instructors table to have separate lines for each course/instructor. We solve the redundancies by creating the tables above so we are not including instructor name/course name detail in more tables than is absolutely necessary. 
+
+6. Are there indexes that you should build? Explain your reasoning.
+	- Ideally, we should set up indexes to support queries/filtering that will be routinely made by the user. We would place indexes on fields that the user will most likely need to search: for example, we could place an index on the instructor_name field in the instructors table because a user is more likely to search an instructor by name instead of using their instructor_id. In the same manner we could also place an index on the course_name field in the courses table because a user may be more likely to search the course by name instead of by course_id. 
+
+7. Are there constraints to enforce? Explain your answer and strategy.
+For example, these actions should not be allowed: Entering learning objectives for a course not offered by the School of Data Science, Assigning an invalid instructor to a course
+	- Include primary key constraints for all primary keys in our database schema so that user joins will work as intended and rows are uniquely identified. 
+	- Include a basic constraint to not allow null values for any field in our schema for data integrity purposes.
+	- Include a check constraint for our flag fields so that we confirm they are always TRUE or FALSE values. 
+	- Include constraints that do not allow for entering courses or instructors that are not part of the School of Data Science. 
+	- Constraints limiting the size of learning_outcome field and the course_desc field to be less than a specified length depending on memory and performance needs. These are text fields that could be entered by the user and updated regularly, so more strict data validation is useful here. 
+
+8. Draw and submit a Relational Model for your project. For an example, see Beginning Database Design Solutions page 115 Figure 5-28.
+	- See repo for image file.
+
+9. Suppose you were asked if your database could also support the UVA SDS Residential MSDS Program. Explain any issues that might arise, changes to the database structure (schema), and new data that might be needed. Note you won’t actually need to support this use case for the project.
+	- We need a way to identify if a course is part of the online or residential program, so we would need to add a online_vs_residential field in the courses table. 
+	- We would also likely need to update our primary keys across our schema because we could run into the issue where a residential course has the same id and name as an online course, and we would like to distinguish between the two. To solve this, we could update primary keys like course_id to distinguish between online/residential i.e., ds6040_online & ds6040_res so that we are treating them as different courses. We could do the same for other primary keys like learning_outcome_id, assignment_id, term_id. 
+	- We should consider memory issues depending on how large the catalog of new data needed to contain the residential msds data. 
+	- We should consider performance issues if we need to query on larger tables & reindex to include the residential data.
+	- We might need to start considering data like maximum class size, student roster, etc. because there may be stricter limits on how many students can be enrolled in a residential class due to size limits compared to online classes. 
+	
