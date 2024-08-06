@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "pkg_vat5jy"
 version = "0.0.1"
 authors = [
-  { name="Victor", email="email_not_included" },
+  { name="Victor", email="example@example.com" },
 ]
 description = "Test package for linux class"
 readme = "README.md"
